@@ -44,6 +44,18 @@ h2{margin:0;font-size:clamp(44px,8vw,104px);line-height:.92;font-weight:800;lett
 .item .t{font-size:clamp(22px,3vw,34px);font-weight:500;letter-spacing:-.02em;line-height:1.12}
 .item .k{font-size:14px;text-align:right;color:var(--muted)}
 .item:hover .k{color:var(--accent)}
+.groups{border-bottom:1px solid var(--rule)}
+.grp{border-top:1px solid var(--rule)}
+.grp summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:48px minmax(0,1fr) auto;gap:8px 24px;align-items:baseline;padding-block:24px}
+.grp summary::-webkit-details-marker{display:none}
+.grp .n{font-size:14px;font-weight:500;color:var(--accent);font-variant-numeric:tabular-nums}
+.grp .gt{font-size:clamp(30px,5.2vw,62px);font-weight:800;letter-spacing:-.035em;line-height:1;text-wrap:balance}
+.grp summary:hover .gt{color:var(--accent)}
+.grp .gc::after{content:" +"}
+.grp[open] .gc::after{content:" \2212"}
+.sub{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 40px;padding:0 0 28px 72px}
+.sub a{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding-block:14px;border-top:1px solid var(--soft);text-decoration:none;font-size:20px;font-weight:500}
+.sub a span{font-size:14px;font-weight:400;color:var(--muted);text-align:right}
 .more{align-self:flex-start;font-weight:500;padding-block:10px}
 .psub{margin:0;font-size:clamp(19px,1.8vw,23px);line-height:1.35;max-width:30em}
 .figs{display:flex;flex-wrap:wrap;gap:28px 56px;border-top:2px solid var(--rule);padding-top:24px}
@@ -75,6 +87,9 @@ button:hover{background:var(--accent)}
   .item{grid-template-columns:32px minmax(0,1fr)}
   .item .k{grid-column:2;text-align:left}
   .two{grid-template-columns:minmax(0,1fr)}
+  .grp summary{grid-template-columns:32px minmax(0,1fr)}
+  .grp .gc{grid-column:2}
+  .sub{grid-template-columns:minmax(0,1fr);padding-left:0}
   .row{grid-template-columns:minmax(0,1fr)}
   .about img{width:180px;height:180px}
 }
@@ -104,11 +119,8 @@ button:hover{background:var(--accent)}
     </div>
     <div class="c label">Hanover, NH</div>
   </div>
-  <div>
-    <div class="head label"><span>Selected work</span><span>2025 to 2026</span></div>
-    <div class="list" id="featured"></div>
-  </div>
-  <a class="more" href="#work">See all 12 projects</a>
+  <div class="groups" id="groups"></div>
+  <a class="more" href="#work">See all 12 projects as one index</a>
 </div>
 
 <div class="view" data-view="work" hidden>
@@ -239,8 +251,16 @@ function el(tag,cls,txt){var e=document.createElement(tag);if(cls)e.className=cl
 function pad(i){return (i<9?'0':'')+(i+1);}
 function item(p,i,right){var a=el('a','item');a.href='#p-'+p.id;a.appendChild(el('span','n',pad(i)));a.appendChild(el('span','t',p.t));a.appendChild(el('span','k',right));return a;}
 var all=document.getElementById('all'),feat=document.getElementById('featured');
-P.forEach(function(p,i){all.appendChild(item(p,i,p.k));if(p.feat)feat.appendChild(item(p,i,p.feat));});
+P.forEach(function(p,i){all.appendChild(item(p,i,p.k));});
 function $(id){return document.getElementById(id);}
+var G=[['Founding and leading',['contrall','builder','team','arp']],['Analysis and technical',['diamond','reco','reporting','auction']],['Initiatives and community',['paddleworks','club','basketball','onefact']]];
+G.forEach(function(g,gi){
+  var d=el('details','grp');if(gi===0)d.open=true;
+  var sm=el('summary');sm.appendChild(el('span','n',pad(gi)));sm.appendChild(el('span','gt',g[0]));sm.appendChild(el('span','gc label',g[1].length+' projects'));d.appendChild(sm);
+  var sub=el('div','sub');
+  g[1].forEach(function(id){var p=P.filter(function(x){return x.id===id;})[0];if(!p)return;var a=el('a',null,p.t);a.href='#p-'+p.id;a.appendChild(el('span',null,p.k));sub.appendChild(a);});
+  d.appendChild(sub);$('groups').appendChild(d);
+});
 function fill(node,kids){node.textContent='';kids.forEach(function(k){node.appendChild(k);});}
 function showProject(i){
   var p=P[i];
