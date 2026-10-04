@@ -3,19 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
 <meta name="description" content="Portfolio of Meet Nadoda: projects, experience and contact.">
 <title>Meet Nadoda Portfolio</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;800&display=swap">
 <style>
-html{-webkit-text-size-adjust:100%}body{margin:0}img{max-width:100%}[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%;background:#0d0d0c}body{margin:0}img{max-width:100%}[hidden]{display:none!important}
 
 /* Layout: Swiss index, split into views. Home is the name and four lines of work; every project gets its own sparse page led by its numbers. */
 :root{
-  --bg:#ffffff; --fg:#0a0a0a; --muted:#55524f; --rule:#0a0a0a; --soft:#e4e2df; --accent:#c8102e;
+  --bg:#0d0d0c; --fg:#f3f1ee; --muted:#a8a4a0; --rule:#f3f1ee; --soft:#2c2b29; --accent:#ff4d5e; color-scheme:dark;
   --sans:'Archivo','Helvetica Neue',Helvetica,sans-serif;
 }
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0d0d0c;--fg:#f3f1ee;--muted:#a8a4a0;--rule:#f3f1ee;--soft:#2c2b29;--accent:#ff4d5e;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#0d0d0c;--fg:#f3f1ee;--muted:#a8a4a0;--rule:#f3f1ee;--soft:#2c2b29;--accent:#ff4d5e;color-scheme:dark}
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:16px;line-height:1.5;padding-inline:clamp(16px,4vw,56px);padding-block:28px 72px}
 a{color:inherit}
